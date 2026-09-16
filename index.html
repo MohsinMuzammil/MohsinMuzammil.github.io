@@ -3,10 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firstname Lastname</title>
+  <title>Mohsin Muzammil</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <h1>Hello, world!</h1>
-  <p>This is my portfolio. It's live on the internet.</p>
+  <header class="container">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section id="hero" class="container">
+      <h1>Mohsin Muzammil</h1>
+      <p>Computer Science and Mathematics graduate building efficient, reliable systems — from low-level C/C++ to applied machine learning.</p>
+      <p>
+        <a href="#projects">View my work</a>
+        &middot;
+        <a href="#contact">Get in touch</a>
+      </p>
+    </section>
+
+    <section id="about" class="container">
+      <h2>About</h2>
+      <p>
+        I'm a Computer Science and Mathematics graduate from the University of Toronto,
+        currently looking for software engineering roles. During my co-op I worked on
+        computer vision and ADAS, and I enjoy building efficient, reliable systems —
+        from low-level C/C++ work to applied machine learning.
+      </p>
+      <p>
+        Outside of engineering, I teach mathematics on YouTube and study financial
+        markets through algorithmic trading research.
+      </p>
+    </section>
+
+    <section id="projects" class="container">
+      <h2>Featured Projects</h2>
+
+      <article>
+        <h3>Writing a Shell from Scratch</h3>
+        <p>Built a Unix shell in C supporting pipelines, redirection, job control, and signal handling.</p>
+        <ul>
+          <li>C</li>
+          <li>Systems Programming</li>
+        </ul>
+        <a href="projects/shell.html">Read more →</a>
+      </article>
+
+      <article>
+        <h3>Machine Learning Challenge: Predicting Food Items</h3>
+        <p>Built an ML pipeline to classify food images by category, comparing preprocessing and feature-engineering strategies.</p>
+        <ul>
+          <li>Python</li>
+          <li>Machine Learning</li>
+        </ul>
+        <a href="projects/ml-food-prices.html">Read more →</a>
+      </article>
+
+      <article>
+        <h3>Game Tree Search Checkers</h3>
+        <p>Developed a checkers AI using minimax with alpha-beta pruning and a custom evaluation function.</p>
+        <ul>
+          <li>C++</li>
+          <li>Game AI</li>
+        </ul>
+        <a href="projects/checkers.html">Read more →</a>
+      </article>
+
+      <article>
+        <h3>Trading Strategy Development and Backtesting</h3>
+        <p>Designed and backtested algorithmic trading strategies against historical market data.</p>
+        <ul>
+          <li>Python</li>
+          <li>Finance</li>
+        </ul>
+        <a href="projects/trading-backtest.html">Read more →</a>
+      </article>
+
+      <article>
+        <h3>Constraint Satisfaction Battle Ship</h3>
+        <p>Built a Battleship solver using CSP techniques — backtracking, forward checking, and heuristics.</p>
+        <ul>
+          <li>Python</li>
+          <li>AI</li>
+        </ul>
+        <a href="projects/battleship.html">Read more →</a>
+      </article>
+
+      <p><a href="projects/index.html">See all projects →</a></p>
+    </section>
+
+    <section id="contact" class="container">
+      <h2>Contact</h2>
+      <p>The best way to reach me is by email, or find me on GitHub and LinkedIn.</p>
+      <ul>
+        <li><a href="mailto:you@example.com">you@example.com</a></li>
+        <li><a href="https://github.com/firstnamelastname">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/firstnamelastname">LinkedIn</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>&copy; 2025 Your Name. Built by hand.</p>
+  </footer>
+
 </body>
 </html>
