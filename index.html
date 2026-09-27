@@ -3,113 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohsin Muzammil</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="Personal portfolio of Mohsin, showcasing his experience in computer science, background in mathematics, and technical interests.">
+  <title>Moh | CS & Math Portfolio</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <header class="container">
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
+
+  <!-- Header -->
+  <header class="site-header">
+
+    <div class="container site-header-inner">
+      <a class="site-logo" href="index.html">
+        <img src="images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
   </header>
-  
+
   <main>
-    <section id="hero" class="container">
-      <h1>Mohsin Muzammil</h1>
-      <p>Computer Science and Mathematics graduate building efficient, reliable systems — from low-level C/C++ to applied machine learning.</p>
-      <p>
-        <a href="#projects">View my work</a>
-        &middot;
-        <a href="#contact">Get in touch</a>
-      </p>
+
+    <!-- Hero -->
+    <section class="section hero">
+      <div class="container">
+
+        <p class="eyebrow">Computer Science &times; Mathematics</p>
+
+        <h1>Hi, I'm <span class="text-accent">Mohsin</span>.</h1>
+
+        <p class="hero-subtitle">
+          I like building things, solving problems, and understanding why things work.
+        </p>
+
+        <div class="button-row">
+          <a class="btn" href="#work">Explore My Work</a>
+          <a class="btn btn-secondary" href="assets/resume.pdf" target="_blank" rel="noopener">
+            View Resume (PDF)
+          </a>
+        </div>
+
+      </div>
     </section>
 
-    <section id="about" class="container">
-      <h2>About</h2>
-      <p>
-        I'm a Computer Science and Mathematics graduate from the University of Toronto,
-        currently looking for software engineering roles. During my co-op I worked on
-        computer vision and ADAS, and I enjoy building efficient, reliable systems —
-        from low-level C/C++ work to applied machine learning.
-      </p>
-      <p>
-        Outside of engineering, I teach mathematics on YouTube and study financial
-        markets through algorithmic trading research.
-      </p>
+    <!-- About -->
+    <section id="about" class="section about">
+      <div class="container">
+        <h2>About Me</h2>
+
+        <div class="about-grid">
+          <div class="about-sidebar">
+            <img class="about-photo" src="images/moh_picture.png" alt="Mohsin">
+            <div class="education">
+              <h3>Education</h3>
+              <h4>University of Toronto Mississauga</h4>
+              <p>Honours Bachelor of Science</p>
+              <p>Computer Science Specialist + Mathematics Major</p>
+              <p>High Distinction &middot; CGPA 3.87/4.00 &middot; 2020&ndash;2025</p>
+            </div>
+          </div>
+
+          <div class="about-text">
+            <p>
+              I am a Computer Science and Mathematics graduate from the
+              University of Toronto. I have always been interested in
+              understanding the how and why behind things—whether that's
+              going the extra step to understand a small detail in a math
+              problem, testing unexpected edge cases to make my algorithms
+              more robust, or digging deeper to find a simpler way to
+              solve a problem.
+            </p>
+            <p>
+              During my 16-month internship, I had the opportunity to work
+              on computer vision and advanced driver assistance systems
+              (ADAS), where I developed and optimized C/C++ software for
+              automotive applications. This experience taught me how to take
+              ideas from theory and turn them into reliable, efficient
+              systems through research, debugging, optimization, and
+              testing, while also giving me the opportunity to work on
+              problems where small details can have a meaningful impact.
+            </p>
+            <p>
+              Outside of software development, mathematics remains a major
+              part of what I do. I teach mathematics and create educational
+              content, and I enjoy exploring mathematical ideas simply
+              because I want to understand them more deeply.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="projects" class="container">
-      <h2>Featured Projects</h2>
+    <!-- Work -->
+    <section id="work" class="section">
 
-      <article>
-        <h3>Writing a Shell from Scratch</h3>
-        <p>Built a Unix shell in C supporting pipelines, redirection, job control, and signal handling.</p>
-        <ul>
-          <li>C</li>
-          <li>Systems Programming</li>
-        </ul>
-        <a href="projects/shell.html">Read more →</a>
-      </article>
+      <div class="container">
+        <h2>What I Do</h2>
 
-      <article>
-        <h3>Machine Learning Challenge: Predicting Food Items</h3>
-        <p>Built an ML pipeline to classify food images by category, comparing preprocessing and feature-engineering strategies.</p>
-        <ul>
-          <li>Python</li>
-          <li>Machine Learning</li>
-        </ul>
-        <a href="projects/ml-food-prices.html">Read more →</a>
-      </article>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Computer Science</h3>
+            <p>
+              I enjoy writing clean, efficient code and developing algorithms to solve problems.
+            </p>
+            <a class="card-link" href="cs.html">Explore my CS work &RightArrow;</a>
+          </article>
 
-      <article>
-        <h3>Game Tree Search Checkers</h3>
-        <p>Developed a checkers AI using minimax with alpha-beta pruning and a custom evaluation function.</p>
-        <ul>
-          <li>C++</li>
-          <li>Game AI</li>
-        </ul>
-        <a href="projects/checkers.html">Read more →</a>
-      </article>
+          <article class="card">
+            <h3>Mathematics</h3>
+            <p>
+              Mathematics has been a major part of my education and continues to be something I explore through teaching and educational content.
+            </p>
+            <a class="card-link" href="math.html">Explore my Math work &RightArrow;</a>
+          </article>
+        </div>
+      </div>
 
-      <article>
-        <h3>Trading Strategy Development and Backtesting</h3>
-        <p>Designed and backtested algorithmic trading strategies against historical market data.</p>
-        <ul>
-          <li>Python</li>
-          <li>Finance</li>
-        </ul>
-        <a href="projects/trading-backtest.html">Read more →</a>
-      </article>
-
-      <article>
-        <h3>Constraint Satisfaction Battle Ship</h3>
-        <p>Built a Battleship solver using CSP techniques — backtracking, forward checking, and heuristics.</p>
-        <ul>
-          <li>Python</li>
-          <li>AI</li>
-        </ul>
-        <a href="projects/battleship.html">Read more →</a>
-      </article>
-
-      <p><a href="projects/index.html">See all projects →</a></p>
     </section>
 
-    <section id="contact" class="container">
-      <h2>Contact</h2>
-      <p>The best way to reach me is by email, or find me on GitHub and LinkedIn.</p>
-      <ul>
-        <li><a href="mailto:you@example.com">you@example.com</a></li>
-        <li><a href="https://github.com/firstnamelastname">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/firstnamelastname">LinkedIn</a></li>
-      </ul>
+    <!-- Contact -->
+    <section id="contact" class="section contact">
+
+      <div class="container">
+        <h2>Let's Connect</h2>
+        <p>
+          Interested in my work or want to get in touch?
+          Feel free to connect with me or send me a message on LinkedIn.
+        </p>
+
+        <a
+        class="btn"
+        href="YOUR_LINKEDIN_URL"
+        target="_blank"
+        rel="noopener noreferrer">
+          Connect with me on LinkedIn &rightarrow;
+        </a>
+      </div>
+
     </section>
+
   </main>
 
-  <footer class="container">
-    <p>&copy; 2025 Your Name. Built by hand.</p>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Mohsin</p>
+    </div>
   </footer>
 
 </body>
