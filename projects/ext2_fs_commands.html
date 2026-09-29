@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Implementing ext2 file system commands in C, including mkdir, cp, rm, and hard and symbolic links, with mutex-based synchronization.">
+  <title>ext2 File System Commands | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Operating Systems</p>
+
+          <h1>ext2 File System Commands</h1>
+
+          <p class="project-subtitle">
+            Implementing core file system commands in C against a real
+            ext2-formatted virtual disk, with mutex-based synchronization.
+          </p>
+
+          <div class="project-meta">
+            <span>November &ndash; December 2022</span>
+            <span>C &middot; Operating Systems &middot; File Systems</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I learned how the ext2 file system works and
+          implemented a set of core file system commands in C that
+          operate directly on an ext2-formatted virtual disk. Rather
+          than calling into an existing API, I worked with the raw
+          on-disk structures: superblocks, inode tables, data blocks,
+          and directory entries.
+        </p>
+
+        <p>
+          The commands I implemented were:
+        </p>
+
+        <ul class="content-list">
+          <li><code>mkdir</code> &mdash; creating a directory</li>
+          <li><code>cp</code> &mdash; copying a file</li>
+          <li><code>rm</code> &mdash; removing a file</li>
+          <li><code>ln_hl</code> &mdash; creating a hard link</li>
+          <li><code>ln_sl</code> &mdash; creating a symbolic link</li>
+        </ul>
+
+        <p>
+          Each command was implemented with mutual exclusion over shared
+          file system structures, using mutexes to ensure that concurrent
+          operations could not corrupt the disk image.
+        </p>
+
+
+        <h2>Working with Binary Data</h2>
+
+        <p>
+          Although these commands may seem simple on the surface, the
+          reality of implementing them for a specific file system is
+          quite involved. Everything has to be done at the level of
+          binary data, and doing it correctly requires a solid
+          understanding of how the file system organizes itself on
+          disk.
+        </p>
+
+        <p>
+          In ext2, every file and every directory corresponds to an
+          inode. Directories are not opaque containers &mdash; they are
+          files whose data blocks hold a linked list of directory
+          entries, each one mapping a name to an inode number. There is
+          no library that abstracts this away; every lookup, every
+          insert, and every deletion is something I had to perform
+          myself.
+        </p>
+
+
+        <h2>A Concrete Example: <code>rm</code></h2>
+
+        <p>
+          Consider the command <code>rm /folder/myfile</code>. In an
+          ext2 file system, this is not a single operation but a
+          sequence of careful steps:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            Start at the root inode and search its data blocks &mdash;
+            a linked list of directory entries &mdash; for an entry
+            named <code>folder</code>.
+          </li>
+          <li>
+            Verify that the entry actually refers to a directory, not
+            a file.
+          </li>
+          <li>
+            Search <code>folder</code>'s data blocks for an entry named
+            <code>myfile</code>, and verify that it refers to a regular
+            file.
+          </li>
+          <li>
+            Once verified, mark the inode and the data blocks that hold
+            <code>myfile</code>'s contents as free, so they can be
+            reallocated by other files or directories.
+          </li>
+          <li>
+            Finally, update the parent directory's data blocks to
+            reflect that the entry <code>myfile</code> has been
+            removed &mdash; either by unlinking it from the linked
+            list or marking it as deleted.
+          </li>
+        </ul>
+
+        <p>
+          Every one of these steps has to be done correctly, in the
+          right order, and with the right locking. Skipping a step or
+          performing them out of order would leave the disk in an
+          inconsistent state.
+        </p>
+
+
+        <h2>Synchronization</h2>
+
+        <p>
+          Because multiple commands can act on the same file system
+          structures at once, I used mutexes to guarantee mutual
+          exclusion over the inode table, data block bitmap, and
+          directory entries. This ensures that concurrent operations
+          cannot corrupt the disk image, even when they touch
+          overlapping regions of the file system.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project gave me a much deeper understanding of what a
+          file system actually <em>is</em>. On the surface, commands
+          like <code>cp</code> and <code>rm</code> feel trivial &mdash;
+          you type them and something happens. But implementing them
+          from first principles against raw disk structures made it
+          clear how much careful bookkeeping is happening underneath.
+        </p>
+
+        <p>
+          It also strengthened my intuition for low-level systems
+          programming in C: pointer arithmetic on binary data,
+          reasoning about byte offsets, and synchronizing shared state.
+          These are skills that only really develop when you have to
+          do them, and this project gave me that opportunity.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

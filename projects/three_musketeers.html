@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="A Three Musketeers board game built in Java across three phases: CLI, JavaFX GUI, and a team-based refactor applying SOLID and design patterns.">
+  <title>Three Musketeers Board Game | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Software Design</p>
+
+          <h1>Three Musketeers Board Game</h1>
+
+          <p class="project-subtitle">
+            A Java implementation of the Three Musketeers board game,
+            built across three phases: CLI, JavaFX GUI, and a
+            team-based refactor focused on design patterns and SOLID.
+          </p>
+
+          <div class="project-meta">
+            <span>October &ndash; December 2021</span>
+            <span>Java &middot; Software Design &middot; JavaFX</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          This project was a Java implementation of the Three Musketeers
+          board game, developed across three phases:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>Phase 1 &mdash; Command-line version.</strong> A
+            fully playable version of the game in Java, controlled
+            entirely through text input and output.
+          </li>
+          <li>
+            <strong>Phase 2 &mdash; GUI version.</strong> A graphical
+            version built with JavaFX, adding visual rendering of the
+            board, move selection, and game state.
+          </li>
+          <li>
+            <strong>Phase 3 &mdash; Team refactor.</strong> A
+            collaborative pass over the codebase to improve structure
+            by recognizing common design patterns and applying SOLID
+            design principles.
+          </li>
+        </ul>
+
+
+        <h2>The Game</h2>
+
+        <p>
+          Three Musketeers is an asymmetric board game with two players.
+          The Guards win if they manage to get all three Musketeers onto
+          the same row or column. The Musketeers win if they can no
+          longer capture any Guards (i.e. they cannot move) and they are
+          not all on the same row or column.
+        </p>
+
+        <p>
+          The game is playable in two modes:
+        </p>
+
+        <ul class="content-list">
+          <li><strong>Player vs. Player</strong></li>
+          <li>
+            <strong>Player vs. Computer</strong> &mdash; with both
+            random and greedy strategies implemented
+          </li>
+        </ul>
+
+
+        <h2>What I Learned</h2>
+
+        <p>
+          Completing this project gave me valuable experience with:
+        </p>
+
+        <ul class="content-list">
+          <li>Designing heuristics for random and greedy strategies</li>
+          <li>The JUnit and JavaFX frameworks</li>
+          <li>Applying object-oriented programming and SOLID principles in Java</li>
+          <li>Recognizing and applying design patterns to simplify software</li>
+          <li>Git version control, including branching, merging, and pull requests</li>
+          <li>Coordinating and working within a team to develop software</li>
+          <li>Agile scrum methodologies, used by professional software teams</li>
+        </ul>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project was my first real introduction to software
+          engineering as a discipline, rather than just programming. The
+          three-phase structure made the point clearly: the same game
+          can be implemented in wildly different ways, and much of the
+          work of a software engineer is about choosing the right
+          structure for the problem.
+        </p>
+
+        <p>
+          Phase 3 was the most valuable part. Working in a small team to
+          refactor code we'd already written forced us to look at our
+          own work critically, identify where our designs broke down,
+          and apply patterns and principles we'd only seen in lectures.
+          It was also my first experience with git branching and pull
+          requests, and with agile workflows more broadly &mdash; tools
+          and habits that I've relied on ever since.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

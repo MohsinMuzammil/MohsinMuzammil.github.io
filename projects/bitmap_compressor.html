@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="A bitmap image compressor built in Python using quadtrees, recursion, and a user-controlled loss level.">
+  <title>Bitmap Image Compressor | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Algorithms</p>
+
+          <h1>Bitmap Image Compressor</h1>
+
+          <p class="project-subtitle">
+            A Python image compressor that uses quadtrees and recursion
+            to compress bitmap images with a user-controlled loss level.
+          </p>
+
+          <div class="project-meta">
+            <span>March 2021</span>
+            <span>Python &middot; Algorithms &middot; Data Structures</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          This is one of my favourite projects because of its
+          practicality. I programmed a bitmap image compressor in
+          Python whose core ideas are recursion and trees.
+        </p>
+
+        <p>
+          The idea is to store an image as a <strong>quadtree</strong>
+          &mdash; a tree data structure where each node has exactly four
+          children. We begin by splitting the image into four quadrants,
+          and each quadrant is split recursively until we reach
+          individual pixels. Individual pixels become the leaves of the
+          tree.
+        </p>
+
+
+        <h2>Compression with a Loss Level</h2>
+
+        <p>
+          To compress an image, the user provides a
+          <strong>loss level</strong>. As the image is being split into
+          quadrants, the program computes the standard deviation and
+          mean of the pixel values in each quadrant.
+        </p>
+
+        <p>
+          If the standard deviation is below the user-specified loss
+          level, the entire quadrant is treated as a single pixel whose
+          colour value is the mean. This prunes the recursion early and
+          collapses visually uniform regions into a single leaf,
+          dramatically reducing the size of the quadtree without
+          noticeably changing the image.
+        </p>
+
+        <p>
+          The loss level gives the user direct control over the
+          trade-off between file size and image fidelity &mdash; a
+          low loss level preserves more detail, while a high loss level
+          compresses more aggressively.
+        </p>
+
+
+        <h2>Before and After</h2>
+
+        <div class="image-pair-grid">
+
+          <figure class="image-pair">
+            <img src="../images/compressor-dog-before.bmp" alt="Original image before compression">
+            <figcaption>Original</figcaption>
+          </figure>
+
+          <figure class="image-pair">
+            <img src="../images/compressor-dog-after.bmp" alt="Image after compression">
+            <figcaption>Compressed</figcaption>
+          </figure>
+
+          <figure class="image-pair">
+            <img src="../images/compressor-toronto-before.bmp" alt="Original image before compression">
+            <figcaption>Original</figcaption>
+          </figure>
+
+          <figure class="image-pair">
+            <img src="../images/compressor-toronto-after.bmp" alt="Image after compression">
+            <figcaption>Compressed</figcaption>
+          </figure>
+
+        </div>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          What I like about this project is that it takes two ideas I'd
+          learned in class &mdash; recursion and trees &mdash; and
+          uses them to solve a problem that feels genuinely useful.
+        </p>
+
+        <p>
+          It also taught me something about lossy compression that I
+          hadn't appreciated before: the interesting part isn't
+          throwing data away, it's knowing which data can be thrown
+          away without changing what the viewer perceives. That's what
+          the loss level controls, and getting it right is what makes
+          the difference between a compressed image and a ruined one.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

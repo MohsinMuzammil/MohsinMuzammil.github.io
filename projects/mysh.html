@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="mysh: a fully functional Unix shell written from scratch in C, with builtins, environment variables, pipes, background processes, and inter-shell messaging.">
+  <title>Writing a Shell from Scratch | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Systems Programming</p>
+
+          <h1>Writing a Shell from Scratch</h1>
+
+          <p class="project-subtitle">
+            Building <code>mysh</code>, a fully functional Unix shell in
+            C &mdash; from builtins and environment variables to pipes,
+            background processes, and inter-shell messaging.
+          </p>
+
+          <div class="project-meta">
+            <span>January &ndash; April 2022</span>
+            <span>C &middot; Systems Programming &middot; Unix</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I wrote a C program that implements a fully
+          functional shell. It is one of the largest project I have worked on,
+          and also the one I'm proudest of.
+        </p>
+
+        <p>
+          Writing a shell from scratch is a large and daunting task, but
+          I'm glad I had the opportunity to do it. It gave me a much
+          richer understanding of shells and of Unix/Linux systems more
+          broadly &mdash; systems that are still widely used in industry
+          today.
+        </p>
+
+        <p>
+          The shell is called <code>mysh</code>. Over the course of the
+          project, it grew from a simple command loop into something
+          that could realistically be used as a day-to-day shell.
+        </p>
+
+
+        <h2>Features</h2>
+
+        <p>
+          <code>mysh</code> implements a wide range of shell features:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>Built-in commands.</strong> Commands like
+            <code>echo</code>, <code>wc</code>, and <code>cat</code>
+            are implemented directly within the shell. For commands
+            that don't have a builtin, <code>mysh</code> falls back to
+            Bash's implementation by forking a child process and using
+            <code>exec</code>.
+          </li>
+          <li>
+            <strong>Environment variables.</strong> Supports an
+            arbitrary number of environment variables, stored in a
+            linked list allocated on the heap.
+          </li>
+          <li>
+            <strong>File system management.</strong> Implements
+            built-in commands like <code>ls</code> and <code>cd</code>
+            so the shell can navigate and inspect the file system
+            without spawning external processes.
+          </li>
+          <li>
+            <strong>Pipes and process control.</strong> Supports pipes,
+            and allows users to start processes in both the background
+            and the foreground.
+          </li>
+          <li>
+            <strong>Running processes.</strong> Tracks active processes
+            in a linked list on the heap, so the shell can manage them
+            across commands.
+          </li>
+          <li>
+            <strong>Inter-shell messaging.</strong> <code>mysh</code>
+            can start a server in the background and listen for
+            incoming messages, and it can also send messages to other
+            <code>mysh</code> instances that are running a server.
+          </li>
+        </ul>
+
+
+        <h2>What I Learned</h2>
+
+        <p>
+          Completing this project gave me experience with:
+        </p>
+
+        <ul class="content-list">
+          <li>Unix and Linux operating systems</li>
+          <li>Common shell commands and their semantics</li>
+          <li>C programming at a level of real system complexity</li>
+          <li>Error checking and handling</li>
+          <li>Dynamic memory allocation on the heap</li>
+          <li>Working remotely on a different machine using <code>ssh</code></li>
+          <li>Implementing functionality on a tight weekly schedule</li>
+          <li>Writing well-documented, organized, and extendable code</li>
+          <li>Testing and reasoning about code separately before merging it into the main application</li>
+          <li>Version control with <code>git</code></li>
+          <li>Writing unit tests with <code>pytest</code></li>
+        </ul>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project was genuinely hard. A shell is not just a program
+          that reads input and executes commands &mdash; it's an
+          orchestration layer that has to manage processes, memory,
+          file descriptors, environment state, and error handling
+          simultaneously. Getting all of that to work together, and
+          keeping the code organized enough to extend week after week,
+          was the biggest engineering challenge I've taken on at that time.
+        </p>
+
+        <p>
+          What made it rewarding was seeing a project that felt
+          impossible at the start become something I could actually use.
+          By the end, <code>mysh</code> was a real shell &mdash; not a
+          toy, but something that behaved the way a shell is supposed
+          to behave. That shift, from "this is too much" to "this works
+          and I understand how it works," is the reason I consider it
+          my proudest project.
+        </p>
+
+        <p>
+          It also changed how I think about the tools I use every day.
+          Every time I open a terminal now, I have a much clearer sense
+          of what's happening underneath the prompt.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

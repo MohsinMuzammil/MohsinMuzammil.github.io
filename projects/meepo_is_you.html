@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Meepo is You: implementing the game logic for a puzzle game where the player rewrites the rules by pushing blocks, using Python, pygame, and pytest.">
+  <title>Meepo is You | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Game Development</p>
+
+          <h1>Meepo is You</h1>
+
+          <p class="project-subtitle">
+            Implementing the game logic for a puzzle game where the
+            player rewrites the rules of the game by pushing blocks
+            around the map.
+          </p>
+
+          <div class="project-meta">
+            <span>February 2021</span>
+            <span>Python &middot; pygame &middot; pytest</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          <em>Meepo is You</em> is a puzzle game written in Python with a
+          graphical user interface. The premise is inspired by games like
+          <em>Baba is You</em>: the player moves around a map, pushing
+          blocks that represent words, and by arranging those words into
+          sentences they can create, modify, or break the rules of the
+          game itself.
+        </p>
+
+        <p>
+          The GUI was provided to me as part of the assignment &mdash;
+          my task was to implement the game logic. This meant designing
+          the systems for movement, block pushing, rule parsing, and
+          win conditions, and integrating them cleanly with a
+          front-end I hadn't written.
+        </p>
+
+
+        <h2>Movement and Pushing</h2>
+
+        <p>
+          Every player input triggers a small set of checks: is the
+          target tile within the map's bounds, what occupies it, and if
+          it's a pushable block, is the tile behind it free? If any
+          check fails, the move is rejected. If the block can be
+          pushed, both the block and the player move together.
+        </p>
+
+        <p>
+          Small as these rules are, they interact in ways that aren't
+          obvious &mdash; pushing a block into another block, against a
+          wall, or off the edge of the map. Getting the order of checks
+          right mattered, and bugs in this layer were often subtle to
+          trace back to their source.
+        </p>
+
+
+        <h2>Rules as a Runtime System</h2>
+
+        <p>
+          Rules are formed when blocks align into a sentence like
+          <code>MEEPO IS YOU</code> or <code>WALL IS STOP</code>. After
+          every move, the game scans the board for these alignments,
+          collects the active rules, and applies them to the world.
+        </p>
+
+        <p>
+          This means the rules aren't fixed. Pushing a block out of a
+          sentence disables it; pushing a block into a new sentence
+          activates one. A single move can break one rule and create
+          another at the same time, so the game has to recompute and
+          reapply rules from scratch on every turn rather than caching
+          them once at level load.
+        </p>
+
+
+        <h2>Integrating with a Provided GUI</h2>
+
+        <p>
+          Because the GUI was already written, I had to read through
+          someone else's code, understand its conventions, and build my
+          logic to fit cleanly on top of it. This is very different from
+          writing everything from scratch &mdash; it forced me to think
+          about what a module should expose, how to keep my code
+          decoupled from the GUI's internals, and how to reason about
+          code I hadn't designed myself.
+        </p>
+
+
+        <h2>Testing with pytest</h2>
+
+        <p>
+          I used <code>pytest</code> to test the game logic independently
+          of the GUI. Because the rules are dynamic &mdash; a sentence
+          isn't just data, it's a change to the rules of the simulation
+          &mdash; testing helped me verify that a given arrangement of
+          blocks produced the correct set of active rules without having
+          to play through the level visually.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project was my first real experience with the idea that
+          game logic and game presentation are two separate things
+          &mdash; and that the logic is where most of the actual work
+          lives. Once I made that distinction, everything became
+          easier: the GUI could do whatever it wanted, and my job was
+          to expose a clean interface for it to query.
+        </p>
+
+        <p>
+          Working with <code>pygame</code> and <code>pytest</code> for
+          the first time also gave me a taste of what a real Python
+          project looks like &mdash; a set of libraries, a testing
+          framework, and code that has to integrate with other people's
+          work.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="A sliding tile puzzle solver implementing DFS and A* search with an admissible Manhattan distance heuristic.">
+  <title>Sliding Tile Puzzle | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Artificial Intelligence</p>
+
+          <h1>Sliding Tile Puzzle</h1>
+
+          <p class="project-subtitle">
+            A solver for the classic sliding tile puzzle, implementing
+            both DFS and A* search with an admissible Manhattan distance
+            heuristic.
+          </p>
+
+          <div class="project-meta">
+            <span>September 2024</span>
+            <span>Python &middot; Artificial Intelligence &middot; State Space Search</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I developed a solver for a sliding tile
+          puzzle inspired by Hua Rong Dao. The goal is to
+          navigate a board of movable pieces into a specified goal
+          configuration using as few moves as possible.
+        </p>
+
+        <p>
+          I implemented two search algorithms to compare their
+          behavior: Depth-First Search (DFS) and A* search. DFS served
+          as a baseline for exploring the state space, while A* with an
+          admissible heuristic was responsible for finding optimal
+          solutions efficiently.
+        </p>
+
+
+        <h2>The A* Heuristic</h2>
+
+        <p>
+          One of the highlights of the implementation was the design of
+          the heuristic function for A*. I used the <strong>Manhattan
+          distance</strong>: for each piece on the board, I computed
+          the number of horizontal and vertical steps required to move
+          it to its goal position, and summed those distances across
+          all pieces.
+        </p>
+
+        <p>
+          Manhattan distance is <em>admissible</em> &mdash; it never
+          overestimates the true cost of reaching the goal &mdash;
+          which guarantees that A* finds an optimal solution. It's also
+          far more informative than a naive heuristic like counting
+          misplaced tiles, which allowed the search to reach the goal
+          in significantly fewer expansions.
+        </p>
+
+
+        <h2>Successor Generation</h2>
+
+        <p>
+          I also took care in writing a clean, modular function for
+          generating successor states. Movement directions are encoded
+          as a simple list:
+        </p>
+
+        <ul class="content-list">
+          <li><code>(0, 1)</code> &mdash; right</li>
+          <li><code>(0, -1)</code> &mdash; left</li>
+          <li><code>(1, 0)</code> &mdash; down</li>
+          <li><code>(-1, 0)</code> &mdash; up</li>
+        </ul>
+
+        <p>
+          By iterating over this list and checking each candidate move
+          against the board's dimensions, the successor function stays
+          compact while still handling every piece correctly. The
+          result is code that's easy to reason about and easy to
+          extend if the puzzle format changes.
+        </p>
+
+
+        <h2>Handling Puzzles of Varying Complexity</h2>
+
+        <p>
+          The solver was designed to handle puzzles across a range of
+          difficulties, from simple configurations solvable in a few
+          moves to genuinely challenging boards. Each stage of the
+          pipeline &mdash; parsing the input files, running the search,
+          reconstructing the solution path via backtracking &mdash; was
+          tested and refined separately to keep the overall system
+          dependable.
+        </p>
+
+
+        <h2>Results</h2>
+
+        <div class="stat-callout">
+          <span class="stat-value">Seconds</span>
+          <span class="stat-label">
+            solves complex puzzles while keeping the code clean and
+            modular
+          </span>
+        </div>
+
+        <p>
+          The final program solves even complex puzzles in seconds
+          using A*, while DFS provides a useful baseline for
+          comparison.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project deepened my understanding of state-space search
+          algorithms &mdash; not just how DFS and A* work in theory,
+          but why their performance differs so dramatically in practice.
+          The choice of heuristic, in particular, turned out to be the
+          single biggest factor in whether a puzzle was solved in
+          a few seconds or took minutes.
+        </p>
+
+        <p>
+          It also honed my skills in writing modular, efficient Python
+          code. Keeping each piece of the pipeline &mdash; parsing,
+          search, reconstruction &mdash; separate and testable made
+          the project far easier to debug and extend than it would
+          have been as a single monolithic script.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

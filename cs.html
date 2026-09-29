@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Computer science projects and software development work by Mohsin.">
-  <title>Moh | Computer Science</title>
+  <meta name="description" content="Computer science projects and software development work by Moh.">
+  <title>Computer Science | Moh</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="images/moh_logo.png">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
       <nav class="site-nav">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html#about">About</a></li>
-          <li><a class="nav-link" href="cs.html">Computer Science</a></li>
+          <li><a class="nav-link active" href="cs.html">Computer Science</a></li>
           <li><a class="nav-link" href="math.html">Mathematics</a></li>
           <li><a class="nav-link" href="index.html#contact">Contact</a></li>
         </ul>
@@ -51,46 +52,278 @@
       <div class="container">
         <h2>Projects</h2>
 
+        <p>
+          Projects marked with a
+          <span class="star" aria-hidden="true">&starf;</span>
+          are the ones I consider my strongest and most in-depth work.
+        </p>
+
         <div class="card-grid">
+          
+          <!-- ML Challenge -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Machine Learning &middot; Python &middot; 2025
+            </p>
+
+            <h3>Predicting Food Items</h3>
+
+            <p class="card-body">
+              A supervised machine learning model that classifies Pizza, Shawarma, and
+              Sushi from 1,644 survey responses, achieving 90%+ accuracy on
+              unseen users.
+            </p>
+
+            <a class="card-link" href="projects/ml_challenge.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- MNIST Digits -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              Machine Learning &middot; Python &middot; 2025
+            </p>
+
+            <h3>Handwritten Digit Classification</h3>
+
+            <p class="card-body">
+              Implementing a k-Nearest Neighbors classifier from scratch to
+              recognize handwritten digits from the MNIST dataset, achieving
+              90%+ accuracy through careful normalization.
+            </p>
+
+            <a class="card-link" href="projects/mnist_digits.html">
+              View Project &rightarrow;
+            </a>
+          </article>
 
           <!-- Parking Line Detector -->
-          <article class="card project">
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Computer Vision &middot; C++ &middot; 2024
+            </p>
+
             <h3>Parking Line Detector</h3>
-            <p>
-              A computer vision system for detecting parking lines
-              from surround-view camera footage.
+
+            <p class="card-body">
+              A computer vision algorithm for detecting parking lines in
+              around-view monitoring images, with edge-based endpoint extraction
+              and circular-buffer tracking for real-time performance.
             </p>
 
-            <a class="card-link" href="projects/parking-line-detector.html">
-              View Project &RightArrow;
+            <a class="card-link" href="projects/parking_line_detector.html">
+              View Project &rightarrow;
             </a>
           </article>
 
-          <!-- Project 2 -->
-          <article class="card project">
-            <h3>Project Name</h3>
-            <p>
-              A short description of the project and the problem
-              it was designed to solve.
+          <!-- Battleship Solitaire -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Artificial Intelligence &middot; Python &middot; 2024
             </p>
 
-            <a class="card-link" href="projects/template.html">
-              View Project &RightArrow;
+            <h3>Battleship Solitaire</h3>
+
+            <p class="card-body">
+              Solving the Battleship Solitaire puzzle as a constraint
+              satisfaction problem with a ship-based formulation,
+              forward checking, and arc consistency &mdash; among the fastest
+              solvers in the class.
+            </p>
+
+            <a class="card-link" href="projects/battleship_solitaire.html">
+              View Project &rightarrow;
             </a>
           </article>
 
-          <!-- Project 3 -->
-          <article class="card project">
-            <h3>Project Name</h3>
-            <p>
-              A short description of the project and the problem
-              it was designed to solve.
+          <!-- Checkers -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Artificial Intelligence &middot; Python &middot; 2024
             </p>
 
-            <a class="card-link" href="projects/template.html">
-              View Project &RightArrow;
+            <h3>Checkers Endgame Solver</h3>
+
+            <p class="card-body">
+              An AI solver for Checkers endgames using alpha-beta pruning,
+              successor generation, and transposition tables &mdash; solving
+              puzzles in the fewest moves under optimal play.
+            </p>
+
+            <a class="card-link" href="projects/checkers_solver.html">
+              View Project &rightarrow;
             </a>
           </article>
+
+          <!-- Sliding Tile Puzzle -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Artificial Intelligence &middot; Python &middot; 2024
+            </p>
+
+            <h3>Sliding Tile Puzzle</h3>
+
+            <p class="card-body">
+              A solver for a sliding tile puzzle implementing DFS and A* search,
+              with an admissible Manhattan distance heuristic that guarantees
+              optimal solutions.
+            </p>
+
+            <a class="card-link" href="projects/sliding_tile_puzzle.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- ext2 File System Commands -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Operating Systems &middot; C &middot; 2022
+            </p>
+
+            <h3>ext2 File System Commands</h3>
+
+            <p class="card-body">
+              Implementing file system commands &mdash; mkdir, cp, rm, and hard
+              and symbolic links &mdash; directly against a raw ext2 virtual
+              disk, with mutex-based synchronization.
+            </p>
+
+            <a class="card-link" href="projects/ext2_fs_commands.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- Page Tables and Replacement Algorithms -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Operating Systems &middot; C &middot; 2022
+            </p>
+
+            <h3>Page Tables and Replacement Algorithms</h3>
+
+            <p class="card-body">
+              Implementing three-level page table address translation and four
+              page replacement algorithms &mdash; FIFO, LRU, CLOCK, and ARC
+              &mdash; with a comparison report on their trade-offs.
+            </p>
+
+            <a class="card-link" href="projects/page_tables.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- Writing a Shell from Scratch -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              <span class="star" aria-hidden="true">&starf;</span> Systems Programming &middot; C &middot; 2022
+            </p>
+
+            <h3>Writing a Shell from Scratch</h3>
+
+            <p class="card-body">
+              Building <code>mysh</code>, a fully functional Unix shell in C
+              &mdash; with builtins, environment variables, pipes, background
+              processes, and inter-shell messaging.
+            </p>
+
+            <a class="card-link" href="projects/mysh.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- SIMON Memory Game -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              Assembly &middot; RISC-V &middot; 2022
+            </p>
+
+            <h3>SIMON Memory Game</h3>
+
+            <p class="card-body">
+              Programming the classic SIMON Memory Game in RISC-V assembly,
+              with a full instruction manual for the finished game.
+            </p>
+
+            <a class="card-link" href="projects/simon_game.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- Linear Algebra Calculator -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              Hackathon &middot; Python &middot; 2022
+            </p>
+
+            <h3>Linear Algebra Calculator</h3>
+
+            <p class="card-body">
+              A Python calculator for determinants and row reduction, built with
+              two friends at the PyJaC Rebooted Hackathon.
+            </p>
+
+            <a class="card-link" href="projects/linear_algebra_calculator.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- Three Musketeers Board Game -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              Software Design &middot; Java &middot; 2021
+            </p>
+
+            <h3>Three Musketeers Board Game</h3>
+
+            <p class="card-body">
+              A Java implementation of the Three Musketeers board game, built
+              across three phases: CLI, JavaFX GUI, and a team-based refactor
+              applying SOLID and design patterns.
+            </p>
+
+            <a class="card-link" href="projects/three_musketeers.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
+          <!-- Bitmap Image Compressor -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              Algorithms &middot; Python &middot; 2021
+            </p>
+
+            <h3>Bitmap Image Compressor</h3>
+
+            <p class="card-body">
+              A Python image compressor that uses quadtrees and recursion to
+              compress bitmap images with a user-controlled loss level.
+            </p>
+
+            <a class="card-link" href="projects/bitmap_compressor.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+          
+          <!-- Meepo is You -->
+          <article class="card">
+            <p class="eyebrow card-meta">
+              Game Development &middot; Python &middot; 2021
+            </p>
+
+            <h3>Meepo is You</h3>
+
+            <p class="card-body">
+              Implementing the game logic for a puzzle game where the player
+              rewrites the rules by pushing blocks, using Python, pygame, and
+              pytest.
+            </p>
+
+            <a class="card-link" href="projects/meepo_is_you.html">
+              View Project &rightarrow;
+            </a>
+          </article>
+
         </div>
       </div>
 
@@ -101,7 +334,7 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2026 Mohsin</p>
+      <p>&copy; 2026 Moh</p>
     </div>
   </footer>
 

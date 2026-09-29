@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Machine Learning Challenge: Predicting food items from survey data.">
+  <title>Predicting Food Items | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <header class="project-header">
+          <p class="eyebrow">Machine Learning</p>
+          <h1>Predicting Food Items</h1>
+          <p class="project-subtitle">
+            A supervised learning challenge classifying Pizza, Shawarma,
+            and Sushi from survey responses.
+          </p>
+          <div class="project-meta">
+            <span>February 2025 &ndash; April 2025</span>
+            <span>Python &middot; Machine Learning &middot; Data Analysis</span>
+          </div>
+        </header>
+
+
+        <h2>Problem Overview</h2>
+
+        <p>
+          In this project, I developed a supervised machine learning
+          model to predict food items&mdash;Pizza, Shawarma, or
+          Sushi&mdash;from survey data. This was one of the most
+          hands-on and rewarding learning experiences I've had.
+        </p>
+
+        <p>
+          The entire class completed a survey consisting of 8 questions
+          about Pizza, Shawarma, and Sushi. Using this dataset of 1,644
+          responses (548 per food item), the goal was to build a machine
+          learning model that could correctly classify the food based
+          on survey answers.
+        </p>
+
+        <p>
+          Although the dataset was quite small, it was incredibly rich
+          and diverse. Each question captured a different aspect, from
+          numerical and categorical attributes to textual responses.
+          Specifically, the survey included questions about perceived
+          complexity, ingredient count, serving setting, price
+          expectations, associated movies, drink pairings, personal
+          associations, and hot sauce preferences.
+        </p>
+
+        <p>
+          The teaching team also filled out the survey. The challenge
+          was to build a model that generalizes well and performs best
+          on their unseen responses.
+        </p>
+
+
+        <h2>Objective</h2>
+
+        <p>
+          The goal was to build a model that generalizes to unseen
+          users. The focus was on real-world ML practices: robust data
+          processing, careful feature engineering, fair evaluation,
+          and avoiding data leakage.
+        </p>
+
+
+        <h2>Thoughtful Data Splitting</h2>
+
+        <p>
+          A major early decision I made was not to randomly split the
+          data. Since each user had three responses, I insisted that
+          the split must be person-based&mdash;ensuring no individual
+          appears in more than one of the training, validation, or
+          test sets. This was key to preventing data contamination
+          and measuring generalization properly.
+        </p>
+
+        <p>
+          To support this, I implemented a two-stage data splitting
+          strategy:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>Manual 70/15/15 ID-based split</strong> for
+            manual exploration, hyperparameter tuning, and
+            visualization
+          </li>
+          <li>
+            <strong>GroupKFold cross-validation</strong> for more
+            robust hyperparameter tuning while maintaining
+            person-level separation across folds
+          </li>
+        </ul>
+
+
+        <h2>Feature Engineering</h2>
+
+        <p>
+          I designed and implemented a <code>FeatureBuilder</code>
+          class. This modular pipeline handled:
+        </p>
+
+        <ul class="content-list">
+          <li>Text normalization and categorical mapping</li>
+          <li>
+            Missing value imputation based only on training-set
+            statistics
+          </li>
+          <li>
+            Creating new features based on interactions, such as
+            combining perceived complexity with hot sauce preference
+          </li>
+          <li>
+            Consistent transformation across all splits to prevent
+            leakage and ensure fair evaluation
+          </li>
+        </ul>
+
+        <p>
+          Each question (Q1&ndash;Q8) was processed with care. For
+          textual features such as movies, drinks, and people, I
+          experimented with several methods:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>Manual category mapping</strong>, such as
+            selecting the top N drinks or movies
+          </li>
+          <li><strong>Binary Bag of Words</strong></li>
+          <li>
+            <strong>Naive Bayes-based probability lookup</strong>:
+            I trained a multinomial Naive Bayes model to compute
+            the probability of each word indicating a food label.
+            This allowed me to transform text into meaningful
+            distributions over classes in a principled, data-driven
+            way without needing to pick arbitrary thresholds or
+            categories. This also vastly reduced the number of
+            features compared to the Binary Bag of Words approach.
+          </li>
+        </ul>
+
+        <p>
+          I also built a visualization pipeline to plot distributions,
+          including violin plots and box plots, compute feature
+          statistics, and assess overlap between class distributions.
+          This helped me determine which features were most
+          informative.
+        </p>
+
+
+        <h2>Model Exploration</h2>
+
+        <p>
+          To evaluate different modeling approaches, I created a
+          flexible model evaluation framework and explored a wide
+          range of models:
+        </p>
+
+        <ul class="content-list">
+          <li>k-Nearest Neighbors</li>
+          <li>Decision Trees</li>
+          <li>Logistic Regression</li>
+          <li>Multilayer Perceptrons (MLP)</li>
+          <li>Naive Bayes</li>
+          <li>Random Forests</li>
+          <li>Extra Trees</li>
+        </ul>
+
+        <p>
+          In addition, I implemented many of these models from scratch
+          to better understand their underlying algorithms and
+          mechanics.
+        </p>
+
+
+        <h2>Final Results</h2>
+
+        <div class="stat-callout">
+          <span class="stat-value">90%+</span>
+          <span class="stat-label">
+            accuracy on both the validation and test sets
+          </span>
+        </div>
+
+        <p>
+          The best-performing model was an Extra Trees classifier with
+          interaction features, which achieved over 90% accuracy on
+          both the validation and test sets.
+        </p>
+
+
+        <h2>Report</h2>
+
+        <p>
+          The project culminated in a comprehensive LaTeX report
+          (60 pages) documenting the entire pipeline&mdash;from data
+          processing and feature engineering to model experimentation,
+          performance evaluation, and final decisions.
+        </p>
+        
+        <div class="project-action">
+          <a class="btn" href="../assets/ml_challenge_report.pdf" target="_blank" rel="noopener">
+            View the Report
+          </a>
+        </div>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project was incredibly rewarding. It gave me a chance
+          to deeply explore the full machine learning workflow&mdash;from
+          raw survey data to polished predictions.
+        </p>
+
+        <p>
+          I strengthened my understanding of model evaluation, data
+          leakage, feature transformation, and ensemble methods. It
+          also pushed me to think critically about fairness,
+          generalization, and real-world deployment.
+        </p>
+
+        <p>
+          It was a rewarding culmination of weeks of effort, and a
+          clear example of hard work paying off.
+        </p>
+
+
+        <nav class="project-navigation">
+          <a class="card-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

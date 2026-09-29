@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Solving the Battleship Solitaire puzzle as a constraint satisfaction problem using backtracking, forward checking, and arc consistency.">
+  <title>Battleship Solitaire | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Artificial Intelligence</p>
+
+          <h1>Battleship Solitaire</h1>
+
+          <p class="project-subtitle">
+            Solving the Battleship Solitaire puzzle as a constraint
+            satisfaction problem with a ship-based formulation,
+            forward checking, and arc consistency.
+          </p>
+
+          <div class="project-meta">
+            <span>November 2024</span>
+            <span>Python &middot; Artificial Intelligence &middot; Constraint Satisfaction</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I tackled the Battleship Solitaire puzzle by
+          formulating it as a constraint satisfaction problem (CSP). The
+          puzzle presents a grid with hidden ships, and the goal is to
+          deduce the locations and orientations of those ships from
+          row and column constraints, along with partial information
+          about the ships that has already been revealed.
+        </p>
+
+        <p>
+          The puzzle is constrained in several ways: by ship size, by
+          placement rules (ships cannot touch each other, even
+          diagonally), and by the number of ship parts that must appear
+          in each row and column. Solving it requires propagating these
+          constraints intelligently rather than blindly searching the
+          space of possible board configurations.
+        </p>
+
+
+        <h2>A Ship-Based Formulation</h2>
+
+        <p>
+          Most implementations of Battleship Solitaire treat each cell
+          as a variable. I opted for a different approach: I modeled
+          each <em>ship</em> as a variable instead. This minimizes the
+          number of variables and constraints, better aligns with the
+          rules of the game, and leads to more efficient constraint
+          handling.
+        </p>
+
+        <p>
+          The trade-off is that the search space per variable is larger
+          &mdash; each ship has many possible placements &mdash; but
+          the constraints between ships are far more natural to express.
+          Rather than encoding "this cell cannot contain two ships" as
+          a constraint on every pair of cells, I encode "these two ships
+          cannot overlap" as a constraint on two variables.
+        </p>
+
+        <p>
+          This formulation captured the full complexity of the puzzle in
+          a way that felt more intuitive and more manageable, even
+          though it required more careful thinking upfront.
+        </p>
+
+
+        <h2>Preprocessing the Board</h2>
+
+        <p>
+          A significant portion of my time went into preprocessing the
+          board to extract as much information as possible before the
+          main search began. By identifying water cells and known ship
+          parts early, I could systematically deduce the presence of
+          complete ships &mdash; reducing ambiguity and streamlining
+          the problem setup.
+        </p>
+
+        <p>
+          This preprocessing step greatly enhanced the efficiency of
+          the subsequent search. Every ship I could place or eliminate
+          during preprocessing was one fewer variable the solver had
+          to reason about later.
+        </p>
+
+
+        <h2>Constraint Propagation</h2>
+
+        <p>
+          To solve the puzzle, I implemented a CSP solver using
+          backtracking search, supported by forward checking and
+          arc consistency (AC-3) to propagate constraints efficiently.
+        </p>
+
+        <p>
+          I also incorporated Generalized Arc Consistency (GAC) alongside
+          the Minimum Remaining Values (MRV) heuristic, which prioritizes
+          the most constrained variable at each step. Additionally, I
+          optimized the constraint queue by ordering constraints
+          according to a custom heuristic, further accelerating the
+          search.
+        </p>
+
+        <p>
+          One particularly useful optimization was a custom function to
+          check for Domain WipeOut (DWO) scenarios <em>before</em>
+          invoking GAC's <code>hasSupport()</code> method. This allowed
+          the algorithm to detect invalid search paths earlier and
+          avoid significant wasted computation.
+        </p>
+
+
+        <h2>Results</h2>
+
+        <div class="stat-callout">
+          <span class="stat-value">Fastest in class</span>
+          <span class="stat-label">
+            one of the most efficient CSP solvers in the course
+          </span>
+        </div>
+
+        <p>
+          The final solver reliably solves Battleship Solitaire puzzles
+          of the size and complexity used in the course, and my
+          implementation was among the fastest in the class.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project presented several challenges, requiring extensive
+          troubleshooting and refinement to ensure the puzzle was solved
+          correctly and efficiently. While many would have chosen the
+          simpler cell-based formulation, I was determined to tackle the
+          more complex ship-based approach because it would lead to a more
+          efficient and elegant solution.
+        </p>
+
+        <p>
+          That decision paid off. The ship-based model captured the
+          problem more accurately and led to a solver I'm proud of.
+          Along the way, I developed a much better intuition for
+          constraint propagation, search heuristics, and the kind of
+          small implementation details &mdash; like the DWO check
+          before <code>hasSupport()</code> &mdash; that can turn a
+          correct solver into a fast one.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Implementing the SIMON Memory Game in RISC-V assembly, with a full instruction manual for the finished game.">
+  <title>SIMON Memory Game | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Assembly</p>
+
+          <h1>SIMON Memory Game</h1>
+
+          <p class="project-subtitle">
+            Programming the classic SIMON Memory Game in RISC-V assembly,
+            with a complete instruction manual for the finished game.
+          </p>
+
+          <div class="project-meta">
+            <span>February &ndash; March 2022</span>
+            <span>RISC-V Assembly &middot; Low-Level Programming</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I programmed the classic SIMON Memory Game in
+          RISC-V assembly. It was my first substantial exposure to
+          assembly language, and it gave me a much more concrete
+          understanding of what's actually happening underneath a
+          high-level program.
+        </p>
+
+        <p>
+          The SIMON Memory Game presents a sequence of coloured lights
+          and tones, and the player has to reproduce the sequence from
+          memory. Each round, the sequence grows longer, and the game
+          continues until the player makes a mistake. Implementing it in
+          assembly meant building the entire game loop &mdash; input,
+          output, random sequence generation, scoring, and game-over
+          logic &mdash; out of nothing but registers, memory, and
+          system calls.
+        </p>
+
+
+        <h2>Working in Assembly</h2>
+
+        <p>
+          In class, we learned about the conventions that have to be
+          followed when writing assembly. For instance, before jumping
+          to a function call, certain registers have to be saved so
+          that the called function doesn't clobber values the caller
+          still needs.
+        </p>
+
+        <p>
+          I remember hitting a particularly hard-to-find bug because I
+          forgot to save the value in one of my registers, and the
+          function I was calling kept modifying it. The symptom was
+          strange and the cause was invisible &mdash; there was no
+          compiler warning, no stack trace, just wrong behaviour at
+          runtime. Tracking it down forced me to actually understand
+          the calling convention instead of just being told about it.
+        </p>
+
+
+        <h2>The Programmer's View of Memory</h2>
+
+        <p>
+          I also learned about the programmer's view of memory: the
+          stack and the heap, and how they grow towards each other. This
+          mattered concretely in the project. When saving values onto
+          the stack, I had to remember to <em>lower</em> the stack
+          pointer (not raise it).
+        </p>
+
+        <p>
+          Working at this level made the abstractions in higher-level
+          languages much more visible. In C or Python, the stack and
+          heap are managed for you. In assembly, you're the one
+          deciding where things live, when they're freed, and how
+          memory is laid out.
+        </p>
+
+
+        <h2>Appreciating Abstractions</h2>
+
+        <p>
+          This project made me genuinely appreciate the abstractions
+          that exist in modern programming. We're lucky to have
+          languages like Python and Java that handle the low-level
+          bookkeeping for us &mdash; register allocation, calling
+          conventions, stack management, memory layout. Doing all of
+          that by hand, even for a small game, is tedious and
+          error-prone in a way that's easy to underestimate.
+        </p>
+
+        <p>
+          But it's also the kind of experience that changes how you
+          read higher-level code. Once you've managed the stack
+          manually, you understand why recursion has a cost, why
+          certain bugs are hard to reproduce, and why language
+          designers obsess over the details they do.
+        </p>
+
+
+        <h2>Instruction Manual</h2>
+
+        <p>
+          Alongside the game itself, I wrote an instruction manual that
+          concisely explains all the features of the game and walks a
+          reader through how to play it. I put a lot of effort into
+          this document, and I think the final product came out well
+          &mdash; it's clear, complete, and something I'd actually want
+          to read if I picked up the game for the first time.
+        </p>
+
+        <div class="project-action">
+          <a class="btn" href="../assets/simon_manual.pdf" target="_blank" rel="noopener">
+            View the Instruction Manual
+          </a>
+        </div>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project was one of the most educational I've done, even
+          though the finished product is a small game. Writing assembly
+          makes every decision visible: how values move through
+          registers, how function calls work, how memory is laid out,
+          and what it actually costs to do the things high-level
+          languages let us take for granted.
+        </p>
+
+        <p>
+          It also gave me a much sharper sense of debugging. In a
+          high-level language, a compiler catches most of the mistakes
+          you'd make. In assembly, there's no safety net &mdash; a
+          single wrong register or a wrongly-adjusted stack pointer
+          produces silent, confusing failure. Learning to reason about
+          code at that level has made me a more careful programmer
+          everywhere else.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

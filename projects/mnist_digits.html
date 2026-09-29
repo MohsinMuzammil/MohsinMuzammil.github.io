@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Implementing a k-Nearest Neighbors classifier from scratch to recognize handwritten digits from the MNIST dataset.">
+  <title>Handwritten Digit Classification | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Machine Learning</p>
+
+          <h1>Handwritten Digit Classification</h1>
+
+          <p class="project-subtitle">
+            Implementing a k-Nearest Neighbors classifier from scratch to
+            recognize handwritten digits from the MNIST dataset.
+          </p>
+
+          <div class="project-meta">
+            <span>January 2025</span>
+            <span>Python &middot; Machine Learning</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I implemented a k-Nearest Neighbors (k-NN)
+          classifier from scratch to classify handwritten digits from
+          the MNIST dataset. The goal was not simply to train a model,
+          but to understand the algorithm at the level of matrices,
+          vectors, and distance computations&mdash;and to see how far
+          careful implementation and preprocessing could take a
+          classical method.
+        </p>
+
+        <p>
+          The workflow began with storing the dataset in matrices and
+          vectors, then splitting it into training, validation, and test
+          sets. From there, I built the core k-NN machinery by hand, tuned
+          it, and evaluated its ability to generalize to unseen data.
+        </p>
+
+
+        <h2>Implementation</h2>
+
+        <p>
+          The heart of the classifier is the distance computation: given
+          a test image, I needed to compute its squared Euclidean distance
+          to every training image. A naive implementation would use
+          nested loops, but that scales poorly and misses the point of
+          working with NumPy.
+        </p>
+
+        <p>
+          Instead, I implemented the distance computation using
+          vectorization and broadcasting, so that the entire set of
+          pairwise distances could be computed in a single array
+          operation. Using <code>np.argsort()</code> for distance
+          sorting, the full k-NN algorithm became compact, readable,
+          and performant&mdash;without any explicit Python loops over
+          individual images.
+        </p>
+
+        <p>
+          This was one of the most valuable parts of the project: it
+          forced me to think about how array shapes align, how
+          broadcasting rules work, and how to express an algorithm in
+          the language of linear algebra rather than in loops.
+        </p>
+
+
+        <h2>Tuning k</h2>
+
+        <p>
+          With the classifier working, I evaluated its accuracy across
+          different values of <em>k</em>, from 1 to 10, using the
+          validation set. The initial results were disappointing:
+          accuracy hovered around 30%, barely better than chance on a
+          10-class problem.
+        </p>
+
+        <p>
+          Something was clearly wrong, and the issue turned out not to
+          be the algorithm but the data. Raw pixel values vary widely
+          in scale, and without normalization, the distance metric
+          was being dominated by whichever pixels happened to have
+          the largest values.
+        </p>
+
+
+        <h2>Normalization</h2>
+
+        <p>
+          To address this, I normalized the dataset by subtracting the
+          mean and dividing by the standard deviation of the training
+          data. Crucially, the statistics were computed <em>only</em>
+          from the training set and then applied consistently to the
+          validation and test sets&mdash;avoiding any information
+          leakage from the held-out data.
+        </p>
+
+        <p>
+          This single preprocessing step boosted validation accuracy
+          from roughly 30% to over 90%. It was a striking reminder that
+          in machine learning, how you prepare the data often matters
+          as much as the model itself.
+        </p>
+
+
+        <h2>Results</h2>
+
+        <div class="stat-callout">
+          <span class="stat-value">90%+</span>
+          <span class="stat-label">
+            accuracy on the test set with the optimal k
+          </span>
+        </div>
+
+        <p>
+          Using the optimal <em>k</em> value identified during
+          validation, I applied the classifier to the test set and
+          achieved over 90% accuracy. This confirmed that the model
+          generalized well to data it had never seen&mdash;and that the
+          normalization step had genuinely improved the classifier's
+          decision boundary rather than just its performance on the
+          validation split.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project was an exercise in doing more with less. k-NN is
+          one of the simplest classifiers in machine learning, but
+          implementing it from scratch&mdash;and getting it to work
+          well&mdash;required careful thinking about vectorization,
+          numerical scale, and evaluation.
+        </p>
+
+        <p>
+          It strengthened my intuition for NumPy broadcasting, for
+          preprocessing as a first-class part of the pipeline, and for
+          the importance of computing statistics only from training
+          data. It was also a good reminder that performance problems
+          are not always algorithmic: sometimes the fix is a
+          single line of normalization.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

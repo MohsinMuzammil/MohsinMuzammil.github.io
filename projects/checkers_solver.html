@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="An alpha-beta pruning solver for Checkers endgames, with successor generation, transposition tables, and heuristic move ordering.">
+  <title>Checkers Endgame Solver | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Artificial Intelligence</p>
+
+          <h1>Checkers Endgame Solver</h1>
+
+          <p class="project-subtitle">
+            An AI solver for Checkers endgames using alpha-beta pruning,
+            successor generation, and transposition tables.
+          </p>
+
+          <div class="project-meta">
+            <span>October 2024</span>
+            <span>Python &middot; Artificial Intelligence &middot; Game Tree Search</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I implemented an AI solver for Checkers
+          endgames in Python using alpha-beta pruning. The solver
+          navigates the game tree, evaluating states to find optimal
+          moves for both players, and is designed to solve endgame
+          puzzles in the fewest possible moves while assuming both
+          sides play optimally.
+        </p>
+
+        <p>
+          The solver handles simple moves, mandatory jumps, and
+          multi-jump sequences, using an evaluation function and
+          optimizations like node ordering and state caching to
+          improve search efficiency.
+        </p>
+
+
+        <h2>The Heuristic</h2>
+
+        <p>
+          I initially experimented with several heuristics &mdash;
+          distinguishing between kings and normal pieces, analyzing
+          piece layouts, and looking for patterns. But the simplest
+          heuristic turned out to be the most effective for endgames:
+          evaluating the difference in piece count between the two
+          players.
+        </p>
+
+        <p>
+          In the endgame, when very few pieces remain on the board,
+          the material advantage almost always determines the outcome.
+          A more complex heuristic added overhead without improving
+          decisions, and in some positions actually made the search
+          worse by favoring patterns that didn't matter.
+        </p>
+
+
+        <h2>Successor Generation</h2>
+
+        <p>
+          A key part of the implementation was the design of the
+          <code>generate_simple_successors()</code> and
+          <code>generate_jump_successors()</code> functions. These
+          functions generate the legal moves from a given board state,
+          adhering strictly to the game's movement rules.
+        </p>
+
+        <p>
+          In <code>generate_simple_successors()</code>, movement
+          directions are determined by the type of piece: normal pieces
+          move forward diagonally, while kings can move in any diagonal
+          direction. Simple moves are handled in a single pass with
+          minimal branching.
+        </p>
+
+        <p>
+          <code>generate_jump_successors()</code> was more involved.
+          Jumps can be mandatory, and they can chain into multi-jump
+          sequences that must be fully resolved before the turn ends.
+          Rather than solving this with recursion, I implemented it
+          iteratively using a stack to track in-progress jump
+          sequences. This avoids recursion overhead and cleanly
+          handles all jump scenarios &mdash; single jumps, mandatory
+          jumps, and multi-jumps &mdash; in a single framework.
+        </p>
+
+
+        <h2>Search Optimizations</h2>
+
+        <p>
+          To make the Minimax search practical on real puzzles, I
+          layered two optimizations on top of the base alpha-beta
+          pruning algorithm:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>State caching with a transposition table.</strong>
+            Different move orders often lead to the same board state.
+            By caching the evaluated value of each unique state, I
+            avoided re-searching subtrees that had already been
+            explored.
+          </li>
+          <li>
+            <strong>Successor ordering.</strong> Before exploring a
+            node's successors, I sorted them by their heuristic value
+            so the most promising moves were examined first. This
+            maximizes the number of alpha-beta cutoffs, since good
+            moves near the top of the ordering are more likely to
+            prune the rest of the subtree.
+          </li>
+        </ul>
+
+
+        <h2>Results</h2>
+
+        <div class="stat-callout">
+          <span class="stat-value">Optimal play</span>
+          <span class="stat-label">
+            solves endgame puzzles in the fewest moves, with efficient
+            search even on complex scenarios
+          </span>
+        </div>
+
+        <p>
+          The solver reliably finds optimal move sequences on the
+          endgame puzzles used in the course, even for complex
+          multi-jump scenarios. Combined, the optimizations above
+          make the search fast enough to explore large game trees
+          without sacrificing correctness.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project gave me a much deeper understanding of game
+          tree search &mdash; not just how alpha-beta pruning works in
+          theory, but how its performance depends on the details:
+          heuristic quality, successor ordering, and state caching.
+        </p>
+
+        <p>
+          It also reinforced something I keep noticing across
+          projects: a simpler solution is often the better one. The
+          elaborate heuristics I tried first were outperformed by
+          piece count. The recursive multi-jump approach I drafted
+          first was cleaner and faster as an iterative stack-based
+          version. In both cases, understanding the problem well
+          enough to simplify it was more valuable than adding
+          sophistication.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

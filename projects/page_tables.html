@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Implementing three-level page table address translation and four page replacement algorithms (FIFO, LRU, CLOCK, and ARC) in C.">
+  <title>Page Tables and Replacement Algorithms | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Operating Systems</p>
+
+          <h1>Page Tables and Replacement Algorithms</h1>
+
+          <p class="project-subtitle">
+            Implementing three-level page table address translation and
+            four page replacement algorithms &mdash; FIFO, LRU, CLOCK,
+            and ARC &mdash; from scratch.
+          </p>
+
+          <div class="project-meta">
+            <span>October &ndash; November 2022</span>
+            <span>C &middot; Operating Systems &middot; Memory Management</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          Many students learn about page tables, address translation,
+          and page replacement algorithms in theory. In this project, I
+          got the opportunity to implement those ideas in practice.
+        </p>
+
+        <p>
+          There were two parts to the project:
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>Multilevel page tables</strong> &mdash; translating
+            virtual addresses into physical addresses through a
+            three-level page table, using bitwise operations.
+          </li>
+          <li>
+            <strong>Replacement algorithms</strong> &mdash; implementing
+            four different page replacement policies and comparing
+            them against each other.
+          </li>
+        </ul>
+
+
+        <h2>Part 1: Page Tables and Address Translation</h2>
+
+        <p>
+          In this task, we are given virtual addresses and need to
+          translate them into physical addresses using a three-level
+          page table. The translation is done through bit manipulation:
+          different portions of the virtual address are extracted and
+          used as indices into each level of the page table.
+        </p>
+
+        <p>
+          Given a virtual address, some of the bits serve as an index
+          into the first-level page table, some as an index into the
+          second-level page table, some as an index into the third-level
+          page table, and the remaining bits specify the offset within
+          the page.
+        </p>
+
+        <p>
+          The lookup proceeds level by level. Indexing into the
+          first-level page table returns a pointer to a second-level
+          page table. Indexing into that returns a pointer to a
+          third-level page table. Finally, indexing into the third-level
+          page table with the remaining bits retrieves the physical
+          page frame, which is combined with the offset to produce the
+          physical address.
+        </p>
+
+        <p>
+          Getting this right required careful attention to bit layout:
+          how many bits belong to each level, how they're shifted and
+          masked, and how the offset is preserved. A single mistake in
+          the shifting would produce an address that pointed somewhere
+          entirely wrong.
+        </p>
+
+
+        <h2>Part 2: Replacement Algorithms</h2>
+
+        <p>
+          In the second task, I implemented four different page
+          replacement algorithms: FIFO, LRU, CLOCK, and ARC. Since page
+          replacement happens on every memory access, these policies
+          need to be fast, so I implemented each one with efficiency in
+          mind.
+        </p>
+
+        <p>
+          The idea behind replacement algorithms is straightforward: as
+          pages are requested, memory fills up. Once memory is full and
+          a new page is requested, the algorithm has to decide which
+          existing page to evict to make room.
+        </p>
+
+        <ul class="content-list">
+          <li>
+            <strong>FIFO (First In, First Out)</strong> &mdash; evicts
+            the oldest page in the cache.
+          </li>
+          <li>
+            <strong>LRU (Least Recently Used)</strong> &mdash; tracks
+            recently used pages and evicts the one that has not been
+            used for the longest time.
+          </li>
+          <li>
+            <strong>CLOCK</strong> &mdash; a low-overhead approximation
+            of LRU. Instead of tracking the least recently used page
+            precisely, it uses reference bits to find a page that is
+            "old enough" to evict.
+          </li>
+          <li>
+            <strong>ARC (Adaptive Replacement Cache)</strong> &mdash;
+            an advanced algorithm that tracks both recently used pages
+            and frequently used pages, plus a recent history of
+            evictions. It is self-tuning, low-overhead, scan-resistant,
+            and responsive to changing patterns in memory access.
+          </li>
+        </ul>
+
+
+        <h2>Comparison Report</h2>
+
+        <p>
+          At the end of the project, I wrote a report comparing the four
+          replacement algorithms against each other. Rather than just
+          listing theoretical differences, I constructed memory access
+          traces where one algorithm outperformed the others, and used
+          those traces to demonstrate the practical consequences of
+          each policy.
+        </p>
+
+        <p>
+          This was one of the most interesting parts of the project: it
+          made the trade-offs concrete. Two algorithms that look similar
+          on paper can behave very differently on a specific workload,
+          and seeing that play out on traces I designed myself made the
+          theory much more tangible.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This project turned abstract operating systems concepts into
+          something I had to reason about concretely. Page tables,
+          bit-level address translation, and replacement policies are
+          all things that are easy to describe in a lecture but tricky
+          to get right in code &mdash; especially when correctness
+          depends on exact bit manipulation and exact bookkeeping.
+        </p>
+
+        <p>
+          It also gave me a deeper appreciation for why operating
+          systems care so much about the cost of these operations. A
+          page replacement algorithm runs on every memory miss, so a
+          small inefficiency compounds quickly. Writing these policies
+          myself made the design trade-offs feel less like trivia and
+          more like engineering decisions with real consequences.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>

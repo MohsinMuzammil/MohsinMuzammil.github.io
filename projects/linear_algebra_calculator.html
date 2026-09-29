@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="A Linear Algebra Calculator built in Python at the PyJaC Rebooted Hackathon, computing determinants and row-reducing matrices.">
+  <title>Linear Algebra Calculator | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Hackathon &middot; Team Project</p>
+
+          <h1>Linear Algebra Calculator</h1>
+
+          <p class="project-subtitle">
+            A Python calculator for determinants and row reduction,
+            built with two friends at the PyJaC Rebooted Hackathon.
+          </p>
+
+          <div class="project-meta">
+            <span>January 2022</span>
+            <span>Python &middot; PyJaC Rebooted Hackathon &middot; Linear Algebra</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          I participated in the PyJaC Rebooted Hackathon with two
+          friends. All three of us share an interest in mathematics and
+          find linear algebra genuinely fascinating, so we decided to
+          challenge ourselves to implement something we'd learned in
+          class as a computer algorithm.
+        </p>
+
+        <p>
+          Our idea was to build a Linear Algebra Calculator in Python
+          with two features:
+        </p>
+
+        <ul class="content-list">
+          <li>Compute the determinant of a square matrix</li>
+          <li>Row reduce a rectangular matrix</li>
+        </ul>
+
+
+        <h2>Optimization</h2>
+
+        <p>
+          We tried to optimize our algorithms where we could. For
+          instance, the determinant is typically computed via cofactor
+          expansion, which quickly becomes expensive as matrices grow.
+        </p>
+
+        <p>
+          Our approach was to search for the row or column containing
+          the most zeros before starting the expansion. Choosing a
+          zero-heavy row means most of the cofactors are multiplied by
+          zero, which lets us skip a significant portion of the work.
+          It's a small algorithmic insight, but it makes a real
+          difference on sparse matrices.
+        </p>
+
+
+        <h2>Reflections</h2>
+
+        <p>
+          This was a cool experience because it gave me an opportunity
+          to directly apply both my math and computer science knowledge
+          to achieve a goal. Turning a concept from a linear algebra
+          lecture into a working algorithm forced me to think about
+          matrices not just as mathematical objects but as data
+          structures &mdash; and to consider what makes one computation
+          more efficient than another.
+        </p>
+
+        <p>
+          Working with two friends also made it memorable. We had to
+          coordinate on design decisions, divide the work, and debug
+          each other's code under time pressure &mdash; a very
+          different experience from working solo. I also recorded and
+          edited a demo video for the judges, which gave me a chance
+          to practice presenting technical work to a non-technical
+          audience.
+        </p>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>
