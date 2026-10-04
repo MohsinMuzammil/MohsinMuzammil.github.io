@@ -498,38 +498,6 @@ ul {
   color: var(--color-text-muted);
 }
 
-/* ---------- Milestones ---------- */
-.milestone-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
-}
-
-.milestone-list li {
-  background-color: var(--color-accent-soft);
-  border-left: 3px solid var(--color-accent);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: var(--space-sm) var(--space-md);
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--color-heading);
-}
-
-/* ---------- Math YouTube Link ---------- */
-.math-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-accent);
-}
-
-.math-link:hover {
-  color: var(--color-accent-hover);
-}
-
 /* ---------- Footer ---------- */
 .site-footer {
   border-top: 1px solid var(--color-border);
@@ -591,10 +559,6 @@ a:focus-visible,
 
   .btn {
     justify-content: center;
-  }
-
-  .card-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -785,4 +749,95 @@ code {
 .video-card h3 {
   font-size: 1rem;
   margin: 0;
+}
+
+/* ---------- Concept callouts (e.g. in TSMOM project) ---------- */
+.concept {
+  background-color: var(--color-surface-alt);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.concept p {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin-bottom: 0;
+  line-height: 1.65;
+}
+
+.concept strong {
+  color: var(--color-heading);
+  font-weight: 600;
+}
+
+/* ---------- Tables ---------- */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.results-table th,
+.results-table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.results-table th {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-alt);
+}
+
+.results-table td:not(:first-child),
+.results-table th:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.results-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.results-table tbody tr:hover {
+  background-color: var(--color-surface-alt);
+}
+
+/* ---------- Figures ---------- */
+.figure {
+  margin: var(--space-xl) 0;
+  text-align: center;
+}
+
+.figure img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--color-surface);
+}
+
+.figure figcaption {
+  margin-top: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+  text-align: center;
 }

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="A volatility-targeted time-series momentum (trend-following) strategy on eight ETFs, backtested in Python with statistical testing: Sharpe, alpha and beta, bootstrap confidence intervals, and robustness checks.">
+  <title>Time-Series Momentum on ETFs | Moh</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/png" href="../images/moh_logo.png">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="site-logo" href="../index.html">
+        <img src="../images/moh_logo.png" alt="Moh logo - home">
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html#about">About</a></li>
+          <li><a class="nav-link active" href="../cs.html">Computer Science</a></li>
+          <li><a class="nav-link" href="../math.html">Mathematics</a></li>
+          <li><a class="nav-link" href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <article class="project-page">
+      <div class="container">
+
+        <!-- Project Header -->
+        <header class="project-header">
+          <p class="eyebrow">Quantitative Finance</p>
+
+          <h1>Time-Series Momentum on ETFs</h1>
+
+          <p class="project-subtitle">
+            Building and testing a trend-following strategy in Python,
+            and measuring honestly how much of the result is real.
+          </p>
+
+          <div class="project-meta">
+            <span>September 2026</span>
+            <span>Python &middot; Quantitative Finance &middot; Statistics</span>
+          </div>
+        </header>
+
+
+        <h2>Overview</h2>
+
+        <p>
+          In this project, I built and backtested a trend-following
+          strategy based on the time-series momentum framework of
+          Moskowitz, Ooi, and Pedersen (2012). It goes long or short
+          eight ETFs spanning equities, bonds, gold, commodities, and
+          real estate, depending on whether each one has been rising or
+          falling, and sizes each position by its recent volatility.
+        </p>
+
+        <p>
+          I did not expect it to beat the stock market, and it doesn't.
+          What I wanted was a strategy whose risk-adjusted return is
+          comparable to SPY's but whose returns arrive at different
+          times, plus a rigorous answer to the question that matters
+          most in backtesting: <em>how much of this is real?</em>
+        </p>
+
+        <div class="stat-callout">
+          <span class="stat-value">&minus;19.4%</span>
+          <span class="stat-label">
+            maximum drawdown, versus &minus;55.2% for SPY (2007&ndash;2025)
+          </span>
+        </div>
+
+        <div class="stat-callout">
+          <span class="stat-value">0.59</span>
+          <span class="stat-label">
+            Sharpe ratio (95% bootstrap CI 0.18&ndash;1.00), versus 0.62 for SPY
+          </span>
+        </div>
+
+        <h2>The Idea</h2>
+
+        <p>
+          Time-series momentum says that an asset's own recent return
+          helps predict its near-future return: assets that have been
+          rising tend to keep rising for a while, and assets that have
+          been falling tend to keep falling. A trend follower buys the
+          first group and sells short the second.
+        </p>
+
+        <div class="concept">
+          <p><strong>Time-series vs. cross-sectional momentum.</strong>
+          Cross-sectional momentum ranks assets against each other and
+          buys the winners and shorts the losers. Time-series momentum
+          ignores the other assets: each one is judged only against its
+          own past, so in a falling market the strategy can be short
+          everything.</p>
+          <p>Proposed explanations include investors reacting slowly to
+          news and herding into trends. I take these as plausible, not
+          proven.</p>
+        </div>
+
+
+        <h2>Design</h2>
+
+        <ul class="content-list">
+          <li>
+            <strong>Data.</strong> Daily adjusted closes from Yahoo
+            Finance for SPY, EFA, EEM, TLT, IEF, DBC, GLD, and VNQ
+            (adjusted prices include dividends and splits). The backtest
+            starts on 2007-02-28, the first day every ETF has a 12-month
+            signal and a volatility estimate, and runs through 2025.
+          </li>
+          <li>
+            <strong>Signal.</strong> At each month-end, take the sign of
+            each ETF's past 6-month and 12-month return and average them.
+            Both up gives +1, both down gives &minus;1, and disagreement
+            gives 0 (flat).
+          </li>
+          <li>
+            <strong>Sizing.</strong> Scale each position to a 20%
+            volatility target: size = 0.20 / trailing 60-day volatility,
+            capped at 2&times; leverage. A quiet asset at 6% volatility
+            would want 3.3&times; but is capped at 2&times;; a 16%
+            volatility ETF gets 1.25&times;.
+          </li>
+          <li>
+            <strong>Timing.</strong> Decide at the month-end close, hold
+            until the next month-end, and earn returns from the following
+            day.
+          </li>
+          <li>
+            <strong>Costs.</strong> 5 basis points (0.05%) for every
+            dollar traded.
+          </li>
+          <li>
+            <strong>Portfolio.</strong> Average the eight positions.
+            Each ETF targets 20% volatility, but diversification brings
+            the portfolio down to about 9.7%.
+          </li>
+        </ul>
+
+        <div class="concept">
+          <p><strong>Volatility targeting.</strong> Instead of putting
+          equal dollars in each asset, size each position inversely to
+          its recent volatility so every asset contributes roughly the
+          same risk. Without it, a single volatile asset (say, emerging
+          markets) would dominate the portfolio.</p>
+        </div>
+
+        <div class="concept">
+          <p><strong>Look-ahead bias.</strong> The most common way for a
+          backtest to be fooled is to use information that would not have
+          been available at the time. Here the signal uses prices up to
+          the month-end close, volatility is lagged one day, and a
+          position only earns returns from the next day. An early
+          version applied the signal a full month late because of an
+          extra shift. It was a lag rather than a leak, but I only
+          caught it by testing on a synthetic price series with a known
+          turning point.</p>
+        </div>
+
+
+        <h2>Measuring Performance</h2>
+
+        <div class="concept">
+          <p><strong>Sharpe ratio.</strong> Average daily return divided
+          by its standard deviation, multiplied by &radic;252 (the
+          number of trading days in a year) to annualize it. It measures
+          return per unit of risk. I did not subtract the cash rate,
+          which flatters it a little.</p>
+          <p><strong>Maximum drawdown.</strong> The largest peak-to-trough
+          fall in cumulative value. It is the worst loss an investor
+          who bought at the top would have sat through.
+          <strong>Calmar</strong> is annual return divided by that
+          number.</p>
+        </div>
+
+
+        <h2>Results</h2>
+
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th scope="col">2007&ndash;2025</th>
+                <th scope="col">TSMOM</th>
+                <th scope="col">SPY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Annual return (CAGR)</td><td>5.34%</td><td>10.85%</td></tr>
+              <tr><td>Annual volatility</td><td>9.65%</td><td>19.81%</td></tr>
+              <tr><td>Sharpe ratio</td><td>0.59</td><td>0.62</td></tr>
+              <tr><td>Max drawdown</td><td>&minus;19.4%</td><td>&minus;55.2%</td></tr>
+              <tr><td>Calmar</td><td>0.28</td><td>0.20</td></tr>
+              <tr><td>Beta to SPY</td><td>0.008</td><td>1.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The strategy does not beat SPY in absolute return. It has a
+          similar Sharpe with about half the volatility and about a third
+          of the worst drawdown. In 2008, SPY lost 36.8% while the
+          strategy gained 17.6%, and in 2022 it gained 5.3% while SPY
+          lost 18.2%.
+        </p>
+
+        <figure class="figure">
+          <img src="../images/tsmom_equity_curve.png"
+               alt="Log-scale cumulative return of the TSMOM strategy versus SPY, 2007 to 2025">
+          <figcaption>
+            Growth of $1 on a log scale. The strategy led through the
+            financial crisis; SPY pulled ahead from roughly 2016.
+          </figcaption>
+        </figure>
+
+        <figure class="figure">
+          <img src="../images/tsmom_drawdowns.png"
+               alt="Drawdowns of the TSMOM strategy and SPY, 2007 to 2025">
+          <figcaption>
+            Drawdowns from the previous peak. SPY's 2008&ndash;2009 fall
+            dwarfs anything the strategy experienced.
+          </figcaption>
+        </figure>
+
+
+        <h2>Is the Result Real?</h2>
+
+        <div class="concept">
+          <p><strong>Beta and alpha.</strong> Regress the strategy's
+          daily returns on SPY's: <code>strategy = alpha + beta &times; SPY + noise</code>.
+          Beta is how much the strategy moves with the stock market
+          (1.0 would mean it moves one-for-one). Alpha is the average
+          return left over once that market exposure is removed.</p>
+          <p><strong>t-statistic.</strong> Estimate divided by its
+          standard error. Above about 2 means it is unlikely to be
+          chance. I used Newey&ndash;West standard errors, which allow
+          for returns being correlated from one day to the next.</p>
+        </div>
+
+        <p>
+          Beta came out at 0.008 (t = 0.3), indistinguishable from zero,
+          and SPY explains less than 0.1% of the strategy's variance.
+          Alpha was 5.58% a year with a t-statistic of 2.58. Two caveats
+          matter. Because beta is almost zero, alpha is nearly the same
+          as the strategy's average return, so this is the Sharpe
+          ratio's evidence again, not a second confirmation. And it is
+          alpha relative to SPY only: the strategy also holds bonds,
+          gold, and commodities, which SPY doesn't capture.
+        </p>
+
+        <div class="concept">
+          <p><strong>Bootstrap confidence interval.</strong> A Sharpe
+          estimated from one 19-year history is a single draw. To see
+          how much it could vary, I resampled the daily returns in
+          21-day blocks (so volatility clustering is preserved) 2,000
+          times and recomputed the Sharpe each time. The middle 95% of
+          those values is the interval.</p>
+        </div>
+
+        <p>
+          The result is a 95% interval of 0.18 to 1.00. That is wide:
+          nineteen years of data cannot tell a true Sharpe of 0.3 from
+          0.9. The interval stays above zero, but I would not claim more
+          than &ldquo;positive and suggestive.&rdquo;
+        </p>
+
+
+        <h2>Does It Depend on One Era?</h2>
+
+        <p>
+          Not obviously. The Sharpe is 0.58 in 2007&ndash;2019 and 0.60
+          in 2020&ndash;2025, with identical CAGR (5.34%) in both. The
+          year-to-year picture is far noisier: the rolling one-year
+          Sharpe ranges from about &minus;2 to +2.5. The worst calendar
+          years were 2018 (&minus;9.2%), 2023 (&minus;5.2%), 2012
+          (&minus;4.7%), 2016 (&minus;4.6%), and 2009 (&minus;3.7%). Some
+          of these followed sharp trend reversals, which would hurt a
+          trend follower, but I did not test that explanation.
+        </p>
+
+        <figure class="figure">
+          <img src="../images/tsmom_rolling_sharpe.png"
+               alt="Rolling 252-day Sharpe ratio of the strategy, ranging between roughly minus 2 and plus 2.5">
+          <figcaption>Rolling 252-day Sharpe ratio. Any single year says very little.</figcaption>
+        </figure>
+
+        <p>
+          Its two deepest drawdowns (about &minus;19% in 2018&ndash;2019
+          and &minus;15% in 2022&ndash;2024) each took roughly three
+          years to recover. That is far shallower than SPY's, but it
+          is a long time to be below a previous high.
+        </p>
+
+        <h2>Is It Really Uncorrelated?</h2>
+
+        <p>
+          The full-sample correlation to SPY is 0.02, but that is an
+          average of very different regimes. The rolling one-year
+          correlation reaches about +0.8 in sustained bull markets
+          (2018, 2021&ndash;22), when the strategy is long equities, and
+          about &minus;0.9 in 2008&ndash;09. So &ldquo;uncorrelated&rdquo;
+          is true on average, not at every moment. Negative-correlation
+          windows also include rebounds, which hurt: the strategy lost
+          3.7% in 2009 while SPY gained 26.4%.
+        </p>
+
+        <figure class="figure">
+          <img src="../images/tsmom_rolling_corr.png"
+               alt="Rolling 252-day correlation between the strategy and SPY, ranging from about minus 0.9 to plus 0.8">
+          <figcaption>Rolling 252-day correlation to SPY.</figcaption>
+        </figure>
+
+        <p>
+          During SPY drawdowns deeper than 10% (27.5% of days), the
+          strategy returned +1.3% annualized while SPY lost 13.3%.
+          Outside them, SPY compounded at 21.7% and the strategy at 6.9%.
+          That is the trade: give up upside in bull markets, avoid most
+          of the damage in crashes. Mixing 80% SPY with 20% strategy
+          raises the Sharpe from 0.62 to 0.68 and cuts the max drawdown
+          from &minus;55.2% to &minus;43.2%. At 60/40 it is 0.77 and
+          &minus;29.7%, at the cost of lower return (CAGR 9.2% vs 10.9%).
+        </p>
+
+
+        <h2>Robustness and Sanity Checks</h2>
+
+        <ul class="content-list">
+          <li>
+            <strong>Costs.</strong> The Sharpe falls gently as costs
+            rise: 0.62 at 0 bps, 0.59 at my 5 bps assumption, and 0.51
+            at 20 bps. Monthly rebalancing keeps trading low. Resizing
+            daily, which an early version did by accident, gave the same
+            Sharpe at higher cost.
+          </li>
+          <li>
+            <strong>Parameters.</strong> I tried 20 combinations of
+            signal horizons and volatility windows. Sharpe ranged from
+            0.42 to 0.61 and my chosen setting (0.59) was not the best,
+            so it wasn't cherry-picked. Variants adding a 1-month
+            horizon were consistently lowest (0.42&ndash;0.48). I
+            treat the plateau, not a single peak, as the evidence.
+          </li>
+          <li>
+            <strong>Random-walk test.</strong> If the pipeline has no
+            look-ahead bias, running it on pure noise should earn
+            nothing on average. Across 20 zero-drift random-walk
+            datasets the mean Sharpe was +0.009 (standard error 0.042).
+          </li>
+          <li>
+            <strong>Where the returns come from.</strong> SPY 25.8%, GLD
+            22.7%, DBC 14.2%, EEM 9.8%, IEF 9.3%, EFA 7.5%, VNQ 5.7%,
+            TLT 4.9% of gross profit. Bonds are only about 14%, so
+            inverse-volatility sizing did not turn it into a rates bet,
+            but SPY and gold together are nearly half.
+          </li>
+        </ul>
+
+
+        <h2>Limitations</h2>
+
+        <ul class="content-list">
+          <li>No financing cost on leverage and no borrow cost on
+            shorts, so results are slightly optimistic.</li>
+          <li>The ETF basket was chosen with hindsight. An 11-ETF
+            version scored Sharpe 0.56.</li>
+          <li>Sharpe is not excess-of-cash. With cash rates averaging
+            very roughly 1.5%, it would be about 0.15 lower.</li>
+          <li>I tried several variants (baskets, horizons, volatility
+            targets), so the alpha t-statistic is not adjusted for that
+            search.</li>
+          <li>Nineteen years is a short sample, and trend following
+            had a weak decade in the 2010s.</li>
+        </ul>
+
+
+        <h2>What I Learned</h2>
+
+        <ul class="content-list">
+          <li>How to build a backtest where timing is explicit, and how
+            easily look-ahead creeps in.</li>
+          <li>What alpha, beta, Sharpe, drawdown, and confidence
+            intervals actually mean, and that a single number hides
+            wide uncertainty.</li>
+          <li>To test the pipeline on data where the right answer is
+            known (random walks, a synthetic turning point).</li>
+          <li>To write down conclusions only after checking them against
+            the output. My first draft of this analysis contained
+            several sentences that the tables contradicted.</li>
+          <li>To structure research as a strategy module, an analysis
+            module, and a notebook, with cached data so every run is
+            reproducible.</li>
+        </ul>
+
+
+        <h2>What I'd Do Next</h2>
+
+        <p>
+          Add financing and borrow costs, widen the universe, subtract
+          the cash rate properly, and fix a train/holdout split before
+          looking at any results. I would also test whether momentum
+          signals from outside the portfolio, such as
+          cross-sectional momentum or carry, add anything.
+        </p>
+
+
+        <h2>Code and Notebook</h2>
+
+        <p>
+          The full code, the analysis notebook with every figure, and a
+          README are on GitHub.
+        </p>
+
+        <div class="project-action">
+          <a class="btn" href="https://github.com/MohsinMuzammil/tsmom-etf-backtest" target="_blank" rel="noopener">
+            View on GitHub
+          </a>
+        </div>
+
+
+        <!-- Project Navigation -->
+        <nav class="project-navigation">
+          <a class="back-link" href="../cs.html">&larr; Back to projects</a>
+        </nav>
+
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Moh</p>
+    </div>
+  </footer>
+
+</body>
+</html>
